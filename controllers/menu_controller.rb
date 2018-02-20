@@ -10,10 +10,11 @@ class MenuController
   def main_menu
     puts "Main Menu - #{address_book.entries.count} entries"
     puts "1 - View all entries"
-    puts "2 - Create an entry"
-    puts "3 - Search for an entry"
-    puts "4 - Import entries from a CSV"
-    puts "5 - Exit"
+    puts "2 - View entry number n"
+    puts "3 - Create an entry"
+    puts "4 - Search for an entry"
+    puts "5 - Import entries from a CSV"
+    puts "6 - Exit"
     print "Enter your selection: "
     selection = gets.to_i
     case selection
@@ -23,17 +24,21 @@ class MenuController
         main_menu
       when 2
         system "clear"
-        create_entry
+        view_specific_entry
         main_menu
       when 3
         system "clear"
-        search_entries
+        create_entry
         main_menu
       when 4
         system "clear"
-        read_csv
+        search_entries
         main_menu
       when 5
+        system "clear"
+        read_csv
+        main_menu
+      when 6
         puts "Good-bye!"
         exit(0)
       else
@@ -51,6 +56,25 @@ class MenuController
     end
     system "clear"
     puts "End of entries"
+  end
+
+  def view_specific_entry
+    system "clear"
+    entry_num = 0
+    addr_count = address_book.entries.count
+    if addr_count > 0
+      until entry_num > 0 && entry_num <= addr_count do
+        print "Enter the specific number for the address entry you want to view: "
+        entry_num = gets.chomp.to_i
+        puts "Invalid input. Please enter a number between 1 and #{addr_count}." if (entry_num == 0 || entry_num > addr_count)
+      end
+      puts address_book.entries[entry_num-1].to_s
+    else
+      puts "There are no entries in the address book."
+    end
+    puts "\nPress Enter to continue . . ."
+    gets
+    system "clear"
   end
 
   def create_entry
