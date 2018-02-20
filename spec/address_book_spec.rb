@@ -36,4 +36,26 @@ RSpec.describe AddressBook do
       expect(new_entry.email).to eq('stormy.daniels@trumptower.com')
     end
   end
+
+  describe "#remove_entry" do
+    it "deletes only one entry from the address book" do
+      book = AddressBook.new
+      book.add_entry('Stormy Daniels', '800-555-1212', 'stormy.daniels@trumptower.com')
+      expect(book.entries.size).to eq(1)
+      book.remove_entry('Stormy Daniels', '800-555-1212', 'stormy.daniels@trumptower.com')
+      expect(book.entries.size).to eq(0)
+    end
+
+    it "does not delete when all data passed does not fully match" do
+      book = AddressBook.new
+      book.add_entry('Stormy Daniels', '800-555-1212', 'stormy.daniels@trumptower.com')
+      expect(book.entries.size).to eq(1)
+      book.remove_entry('Stormy Daniels', '800-xxx-yyyy', 'stormy.daniels@trumptower.com')
+      expect(book.entries.size).to eq(1)
+      book.remove_entry('Stormy Daniels', '800-555-1212', 'stormy.nights@trumptower.com')
+      expect(book.entries.size).to eq(1)
+    end
+
+  end
+
 end
