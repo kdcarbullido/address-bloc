@@ -15,6 +15,7 @@ class MenuController
     puts "4 - Search for an entry"
     puts "5 - Import entries from a CSV"
     puts "6 - Exit"
+    puts "7 - Delete all entries in the address book"
     print "Enter your selection: "
     selection = gets.to_i
     case selection
@@ -41,6 +42,10 @@ class MenuController
       when 6
         puts "Good-bye!"
         exit(0)
+      when 7
+        system "clear"
+        clear_all_entries
+        main_menu
       else
         system "clear"
         puts "Sorry, that is not a valid input"
@@ -198,4 +203,13 @@ class MenuController
         search_submenu(entry)
     end
   end
+
+  def clear_all_entries
+    system "clear"
+    puts "All entries in the address book are being deleted . . . Press Enter to continue . . ."
+    gets
+    address_book.clear_all
+    system "clear"
+  end
+
 end

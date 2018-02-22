@@ -167,4 +167,13 @@ RSpec.describe AddressBook do
       expect(entry).to be_nil
     end
   end
+
+  describe "#clear_all" do
+    it "clears out all entries in the address book" do
+      book.add_entry('Stormy Daniels', '800-555-1212', 'stormy.daniels@trumptower.com')
+      expect(book.entries.size).to eq(1)
+      book.clear_all
+      expect(book.entries.size).to eq(0)
+    end
+  end
 end
